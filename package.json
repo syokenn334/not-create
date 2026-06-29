@@ -1,0 +1,15 @@
+{
+  "name": "strudel-editor-sync",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Edit .strudel files in any editor; hot-swap them into strudel.cc over WebSocket.",
+  "scripts": {
+    "start": "node watch-server.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "chokidar": "^4.0.0",
+    "ws": "^8.18.0"
+  }
+}
