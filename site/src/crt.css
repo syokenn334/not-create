@@ -1,4 +1,4 @@
-/* ===== CRT green-phosphor terminal (fixed screen, scrollable track list) ===== */
+/* ===== CRT green-phosphor deck (fixed screen, thick bottom chin, capsule display) ===== */
 :root {
   --bg: #03070a;
   --bg-screen: #04130b;
@@ -8,7 +8,8 @@
   --amber: #ffb454;
   --glow: rgba(70, 255, 149, 0.55);
   --font: 'DotGothic16', monospace;
-  --bezel: clamp(10px, 2.2vw, 24px);
+  --bezel: clamp(10px, 2vw, 22px);
+  --chin: clamp(56px, 10vh, 96px);
 }
 
 * { box-sizing: border-box; }
@@ -22,7 +23,7 @@ body {
 }
 .glow { text-shadow: 0 0 1px var(--phosphor), 0 0 6px var(--glow); }
 
-/* ---- the screen: fixed full-viewport flex column ---- */
+/* ---- screen content: fixed full-viewport flex column; bottom padding clears the chin ---- */
 .crt {
   position: fixed;
   inset: 0;
@@ -30,54 +31,22 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  padding: calc(var(--bezel) + 0.8rem) calc(var(--bezel) + 1rem);
+  padding: calc(var(--bezel) + 0.8rem) calc(var(--bezel) + 1rem) calc(var(--chin) + 0.8rem);
   background: radial-gradient(120% 120% at 50% 0%, #06190f 0%, var(--bg) 60%, #000 100%);
-  animation: boot 800ms ease-out both;
+  animation: boot 700ms ease-out both;
 }
+/* gentle CRT power-on (softened) */
 @keyframes boot {
-  0% { filter: brightness(5) saturate(0); opacity: 0; }
-  10% { opacity: 1; }
+  0% { filter: brightness(1.7) saturate(0.5); opacity: 0; }
+  35% { opacity: 1; }
   100% { filter: none; opacity: 1; }
 }
 
-/* fixed top region (does not scroll) */
+/* fixed top: punchcard screen */
 .crt-top { flex: 0 0 auto; }
 
-.crt-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  border-bottom: 1px dashed var(--phosphor-dim);
-  padding-bottom: 0.6rem;
-}
-.crt-title {
-  margin: 0;
-  font-size: clamp(1.5rem, 4.5vw, 3rem);
-  font-weight: 400;
-  color: var(--phosphor);
-  text-shadow: 0 0 2px var(--phosphor), 0 0 14px var(--glow);
-  animation: titleGlitch 6s infinite;
-}
-/* readable: clean most of the time, brief RGB-split flickers */
-@keyframes titleGlitch {
-  0%, 88%, 100% { text-shadow: 0 0 2px var(--phosphor), 0 0 14px var(--glow); transform: none; }
-  90% { text-shadow: -2px 0 #ff2e88, 2px 0 #2ee8ff, 0 0 14px var(--glow); transform: translateX(1px); }
-  92% { text-shadow: 2px 0 #ff2e88, -2px 0 #2ee8ff, 0 0 14px var(--glow); transform: translateX(-1px); }
-  94% { text-shadow: 0 0 2px var(--phosphor), 0 0 14px var(--glow); transform: none; }
-}
-.crt-status {
-  font-size: 0.85rem;
-  color: var(--amber);
-  text-shadow: 0 0 6px rgba(255, 180, 84, 0.5);
-  white-space: nowrap;
-}
-.blink { animation: blink 1.1s steps(1) infinite; }
-@keyframes blink { 50% { opacity: 0.15; } }
-
 .crt-error {
-  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
   padding: 0.5rem 0.7rem;
   font-size: 0.78rem;
   color: #ff5a5a;
@@ -88,11 +57,9 @@ body {
   white-space: pre-wrap;
 }
 
-/* fixed punchcard screen */
 .crt-screen {
   position: relative;
-  margin-top: 0.8rem;
-  height: clamp(150px, 26vh, 300px);
+  height: clamp(150px, 30vh, 320px);
   border: 1px solid var(--phosphor-dim);
   border-radius: 6px;
   background: var(--bg-screen);
@@ -108,23 +75,31 @@ body {
   opacity: 0.92;
   mix-blend-mode: screen;
 }
-.crt-screen-label {
+/* status moved to top-right of the play area */
+.crt-screen-status {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 0.8rem;
+  color: var(--amber);
+  text-shadow: 0 0 6px rgba(255, 180, 84, 0.5);
+  pointer-events: none;
+}
+.crt-screen-label.no-signal {
   position: absolute;
   left: 12px;
   bottom: 8px;
   font-size: 0.8rem;
-  color: var(--phosphor);
+  color: var(--phosphor-dim);
   text-shadow: 0 0 6px var(--glow);
   pointer-events: none;
 }
-.crt-screen-label.no-signal { color: var(--phosphor-dim); }
 
 /* ---- scrollable track list (only this scrolls) ---- */
 .crt-grid-wrap {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
-  margin-top: 0.4rem;
   padding-right: 4px;
   scrollbar-color: var(--phosphor-dim) transparent;
 }
@@ -165,13 +140,11 @@ body {
 .card-cta { margin-top: 0.2rem; font-size: 0.82rem; letter-spacing: 0.12em; }
 .card.is-playing .card-cta { color: var(--amber); }
 
-/* fixed footer */
 .crt-footer {
   flex: 0 0 auto;
   font-size: 0.72rem;
   color: var(--phosphor-dim);
-  border-top: 1px dashed var(--phosphor-faint);
-  padding-top: 0.5rem;
+  letter-spacing: 0.12em;
 }
 
 /* ===== full-screen CRT overlays (non-interactive) ===== */
@@ -188,12 +161,46 @@ body {
   background: var(--glow); opacity: 0; mix-blend-mode: overlay; animation: flicker 5s infinite;
 }
 @keyframes flicker { 0%,96%,100% { opacity: 0; } 97% { opacity: 0.04; } 98% { opacity: 0.10; } 99% { opacity: 0.02; } }
+
+/* plastic monitor bezel with a thick bottom chin */
 .crt-bezel {
   position: fixed; inset: 0; pointer-events: none; z-index: 60;
-  border: var(--bezel) solid #0c0f0d; border-radius: 22px;
+  border-style: solid; border-color: #0c0f0d;
+  border-width: var(--bezel) var(--bezel) var(--chin) var(--bezel);
+  border-radius: 22px;
   box-shadow: inset 0 0 0 2px #000, inset 0 0 70px rgba(0,0,0,0.9), inset 0 0 160px rgba(0,0,0,0.6);
 }
 
+/* capsule sub-display embedded in the bottom chin (VCR-style readout) */
+.crt-deck {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: clamp(10px, 2.4vh, 28px);
+  z-index: 61;
+  width: min(460px, 64vw);
+  height: clamp(26px, 4.4vh, 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.1rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #02100a, #061d11);
+  border: 1px solid #0b2f1c;
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.crt-deck-text {
+  font-family: var(--font);
+  font-size: clamp(0.8rem, 1.6vw, 1.05rem);
+  letter-spacing: 0.22em;
+  color: var(--amber);
+  text-shadow: 0 0 7px rgba(255, 180, 84, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .crt, .crt-title, .crt-scanlines, .crt-flicker { animation: none; }
+  .crt, .crt-scanlines, .crt-flicker { animation: none; }
 }

@@ -24,30 +24,18 @@ export default function App() {
   }, []);
 
   const playing = patterns.find((p) => p.id === playingId) || null;
+  // ビデオデッキ風の下部ディスプレイ: 再生中は曲名、待機中はギャラリー名(将来は階層名)
+  const deckText = playing ? playing.title : 'STRUDEL_GALLERY';
 
   return (
     <>
       <div className="crt">
-        {/* fixed top: title + now playing + punchcard screen */}
         <div className="crt-top">
-          <header className="crt-header">
-            <h1 className="crt-title">STRUDEL_GALLERY</h1>
-            <div className="crt-status">
-              {playing ? (
-                <>
-                  ▶ NOW PLAYING<span className="blink"> ▌</span>
-                </>
-              ) : (
-                '■ STANDBY'
-              )}
-            </div>
-          </header>
           {error && <div className="crt-error">⚠ {error}</div>}
           <section className="crt-screen">
             <canvas id="test-canvas" ref={canvasRef} />
-            <div className={`crt-screen-label${playing ? '' : ' no-signal'}`}>
-              {playing ? playing.title : 'NO SIGNAL — SELECT A TRACK'}
-            </div>
+            <div className="crt-screen-status">{playing ? '▶ NOW PLAYING' : '■ STANDBY'}</div>
+            {!playing && <div className="crt-screen-label no-signal">NO SIGNAL</div>}
           </section>
         </div>
 
@@ -69,13 +57,18 @@ export default function App() {
           )}
         </div>
 
-        <footer className="crt-footer">{patterns.length} TRACKS · STRUDEL // CRT GALLERY</footer>
+        <footer className="crt-footer">{patterns.length} TRACKS</footer>
       </div>
 
       <div className="crt-overlay crt-scanlines" />
       <div className="crt-overlay crt-vignette" />
       <div className="crt-overlay crt-flicker" />
       <div className="crt-bezel" />
+
+      {/* bottom-chin capsule sub-display (VCR-style) */}
+      <div className="crt-deck">
+        <span className="crt-deck-text">{deckText}</span>
+      </div>
     </>
   );
 }
