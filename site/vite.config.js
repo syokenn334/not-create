@@ -14,6 +14,7 @@ export default defineConfig({
       '@strudel/tonal',
       '@strudel/transpiler',
       '@strudel/draw',
+      'superdough',
     ],
   },
 });

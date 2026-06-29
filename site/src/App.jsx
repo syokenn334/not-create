@@ -1,31 +1,25 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import patterns from './patterns.json';
 import Card from './Card.jsx';
 import { usePlayer } from './usePlayer.js';
 import './crt.css';
 
 export default function App() {
-  const { playingId, play, stop, error } = usePlayer();
-  const canvasRef = useRef(null);
-
-  // #test-canvas の描画バッファを表示サイズに合わせる(Strudel が punchcard を描く先)
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const r = canvas.getBoundingClientRect();
-      canvas.width = Math.max(1, Math.floor(r.width * dpr));
-      canvas.height = Math.max(1, Math.floor(r.height * dpr));
-    };
-    resize();
-    window.addEventListener('resize', resize);
-    return () => window.removeEventListener('resize', resize);
-  }, []);
+  const {
+    playingId,
+    play,
+    stop,
+    error,
+    partInfos,
+    registerCanvas,
+    registerSpectrumCanvas,
+  } = usePlayer();
 
   const playing = patterns.find((p) => p.id === playingId) || null;
   // ビデオデッキ風の下部ディスプレイ: 再生中は曲名、待機中はギャラリー名(将来は階層名)
   const deckText = playing ? playing.title : 'STRUDEL_GALLERY';
+  // 自動グリッド: パート数に応じて ceil(√N) 列。
+  const cols = Math.max(1, Math.ceil(Math.sqrt(partInfos.length || 1)));
 
   return (
     <>
@@ -33,8 +27,21 @@ export default function App() {
         <div className="crt-top">
           {error && <div className="crt-error">⚠ {error}</div>}
           <section className="crt-screen">
-            <canvas id="test-canvas" ref={canvasRef} />
-            <div className="crt-screen-status">{playing ? '▶ NOW PLAYING' : '■ STANDBY'}</div>
+            <canvas className="crt-spectrum" ref={registerSpectrumCanvas} />
+            <div className="crt-parts" style={{ '--cols': cols }}>
+              {partInfos.map((p, i) => (
+                <div className="crt-part" key={p.key}>
+                  <span className="crt-part-tag">{i + 1}</span>
+                  <canvas
+                    className="crt-part-canvas"
+                    ref={(el) => registerCanvas(i, el)}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="crt-screen-status">
+              {playing ? '▶ NOW PLAYING' : '■ STANDBY'}
+            </div>
             {!playing && <div className="crt-screen-label no-signal">NO SIGNAL</div>}
           </section>
         </div>

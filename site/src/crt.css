@@ -59,20 +59,59 @@ body {
 
 .crt-screen {
   position: relative;
-  height: clamp(150px, 30vh, 320px);
+  /* 縦幅を従来の2倍に */
+  height: clamp(300px, 60vh, 640px);
   border: 1px solid var(--phosphor-dim);
   border-radius: 6px;
   background: var(--bg-screen);
   box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8), inset 0 0 14px var(--phosphor-faint);
   overflow: hidden;
 }
-#test-canvas {
+/* 最背面: 全音声の周波数スペクトル（背景としてかなり暗め） */
+.crt-spectrum {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  z-index: 0;
+  opacity: 0.35;
+  pointer-events: none;
+}
+/* パート別パンチカードの自動グリッド */
+.crt-parts {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 1), 1fr);
+  gap: 6px;
+  padding: 8px;
+  overflow-y: auto;
+  align-content: start;
+  scrollbar-color: var(--phosphor-dim) transparent;
+}
+.crt-parts::-webkit-scrollbar { width: 6px; }
+.crt-parts::-webkit-scrollbar-thumb { background: var(--phosphor-dim); border-radius: 3px; }
+.crt-part {
+  position: relative;
+  border: 1px solid var(--phosphor-faint);
+  background: rgba(70, 255, 149, 0.03);
+  min-height: 22px;
+}
+.crt-part-tag {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 0.6rem;
+  color: var(--phosphor-dim);
+  pointer-events: none;
+  z-index: 1;
+}
+.crt-part-canvas {
+  display: block;
+  width: 100%;
   image-rendering: pixelated;
-  opacity: 0.92;
+  opacity: 0.95;
   mix-blend-mode: screen;
 }
 /* status moved to top-right of the play area */
