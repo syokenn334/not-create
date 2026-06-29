@@ -67,10 +67,24 @@ npm run play     # 再評価(再生)
 ]
 ```
 
+## エディタ補完(Zed)
+
+Strudel 関数(`s` `note` `jux` `gain` …)の補完を効かせるには、パターンを
+**`.mjs` 拡張子**にする(`.strudel` は TypeScript 言語サーバの解析対象外のため補完不可)。
+
+- `types/strudel.d.ts` … `@strudel/{core,mini,tonal,webaudio,draw}`(codeberg.org/uzu/strudel の公開ビルド)の
+  エクスポート名から自動生成した型定義。関数名とメソッドチェーンを補完できる。
+  再生成: `npm run build-types`
+- `jsconfig.json` … `patterns/**/*.mjs` と `types/**/*.d.ts` を言語サーバに読み込ませる設定。
+
+`patterns/live.mjs` を Zed で開けば補完が効く。`.mjs` も監視対象なので保存で strudel.cc に同期される。
+(補完は名前・チェーン支援が目的。引数は any、型チェックはしない。)
+
 ## 設定
 
 - ポート変更: `PORT=3010 npm start`(注入側スクリプトの `PORT` も合わせる)
 - 監視先変更: `PATTERNS_DIR=tunes npm start`
+- 監視拡張子: 既定で `.strudel` / `.mjs` / `.js`(`createSyncServer` の `extensions`)
 
 ## 既知の注意点
 

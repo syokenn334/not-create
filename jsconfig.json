@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "lib": ["ESNext"]
+  },
+  "include": ["patterns/**/*.mjs", "patterns/**/*.js", "types/**/*.d.ts"]
+}

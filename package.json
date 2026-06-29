@@ -10,10 +10,18 @@
     "stop": "node strudel-ctl.mjs stop",
     "toggle": "node strudel-ctl.mjs toggle",
     "play": "node strudel-ctl.mjs play",
-    "bookmarklet": "node build-bookmarklet.mjs"
+    "bookmarklet": "node build-bookmarklet.mjs",
+    "build-types": "node build-types.mjs"
   },
   "dependencies": {
     "chokidar": "^4.0.0",
     "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@strudel/core": "^1.2.6",
+    "@strudel/draw": "^1.2.6",
+    "@strudel/mini": "^1.2.6",
+    "@strudel/tonal": "^1.2.6",
+    "@strudel/webaudio": "^1.3.0"
   }
 }
