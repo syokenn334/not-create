@@ -57,3 +57,36 @@ test('.strudel 以外の変更は配信しない', async () => {
     await rm(dir, { recursive: true, force: true });
   }
 });
+
+test('control メッセージを全クライアントに中継する', { timeout: 2000 }, async () => {
+  const dir = await mkdtemp(path.join(tmpdir(), 'strudel-sync-'));
+  const port = PORT + 2;
+  const server = createSyncServer({ port, dir });
+  await server.ready;
+
+  const browser = new WebSocket(`ws://localhost:${port}`);
+  await new Promise((res, rej) => { browser.on('open', res); browser.on('error', rej); });
+
+  const got = new Promise((resolve, reject) => {
+    browser.on('message', (d) => {
+      const m = JSON.parse(d.toString());
+      if (m.type === 'control') resolve(m);
+    });
+    browser.on('error', reject);
+  });
+
+  const ctl = new WebSocket(`ws://localhost:${port}`);
+  await new Promise((res, rej) => { ctl.on('open', res); ctl.on('error', rej); });
+  ctl.send(JSON.stringify({ type: 'control', action: 'stop' }));
+
+  try {
+    const m = await got;
+    assert.equal(m.type, 'control');
+    assert.equal(m.action, 'stop');
+  } finally {
+    browser.close();
+    ctl.close();
+    await server.close();
+    await rm(dir, { recursive: true, force: true });
+  }
+});
