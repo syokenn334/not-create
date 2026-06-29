@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { initStrudel, evaluate, hush, evalScope } from '@strudel/web';
+import { initStrudel, evaluate, hush, evalScope, samples } from '@strudel/web';
 
 // SPIKE.md 参照:
 // - evaluate/hush は import で使う(window ではない)
@@ -8,7 +8,13 @@ let initPromise = null;
 function ensureInit() {
   if (!initPromise) {
     initPromise = initStrudel({
-      prebake: () => evalScope(import('@strudel/draw')).catch((e) => console.warn('[gallery] draw load failed', e)),
+      // 既定では合成音だけ。ドラム等のサンプルと描画関数を読み込む(失敗は非致命)。
+      prebake: () =>
+        Promise.all([
+          evalScope(import('@strudel/draw')).catch((e) => console.warn('[gallery] draw load failed', e)),
+          samples('github:tidalcycles/dirt-samples').catch((e) => console.warn('[gallery] dirt-samples failed', e)),
+          samples('github:ritchse/tidal-drum-machines').catch((e) => console.warn('[gallery] drum-machines failed', e)),
+        ]),
     }).then(async () => {
       // 全再生パターンにパンチカードを適用(コードを改変せず多文でも安全)。
       // 正確な形は Task 5 の実機確認で確定する。
