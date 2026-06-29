@@ -67,7 +67,7 @@ export default function App() {
 
       {/* bottom-chin capsule sub-display (VCR-style) */}
       <div className="crt-deck">
-        <span className="crt-deck-text">{deckText}</span>
+        <span className={`crt-deck-text${playing ? ' scrolling' : ''}`}>{deckText}</span>
       </div>
     </>
   );
