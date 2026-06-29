@@ -5,7 +5,7 @@ import { usePlayer } from './usePlayer.js';
 import './crt.css';
 
 export default function App() {
-  const { playingId, play, stop } = usePlayer();
+  const { playingId, play, stop, error } = usePlayer();
   const canvasRef = useRef(null);
 
   // #test-canvas の描画バッファを表示サイズに合わせる(Strudel が punchcard を描く先)
@@ -42,6 +42,7 @@ export default function App() {
               )}
             </div>
           </header>
+          {error && <div className="crt-error">⚠ {error}</div>}
           <section className="crt-screen">
             <canvas id="test-canvas" ref={canvasRef} />
             <div className={`crt-screen-label${playing ? '' : ' no-signal'}`}>

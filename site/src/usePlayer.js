@@ -24,22 +24,35 @@ function ensureInit() {
 
 export function usePlayer() {
   const [playingId, setPlayingId] = useState(null);
+  const [error, setError] = useState(null);
 
   const stop = useCallback(() => {
-    hush();
+    try {
+      hush();
+    } catch (err) {
+      console.warn('[gallery] hush error', err);
+    }
     setPlayingId(null);
   }, []);
 
   const play = useCallback(async (id, code) => {
-    await ensureInit();
+    setError(null);
+    try {
+      await ensureInit();
+    } catch (err) {
+      console.error('[gallery] init error', err);
+      setError('INIT: ' + (err?.message || String(err)));
+      return;
+    }
     try {
       await evaluate(code); // 現行パターンを置換 = 同時再生は1つ
       setPlayingId(id);
     } catch (err) {
       console.error('[gallery] evaluate error', err);
+      setError('EVAL: ' + (err?.message || String(err)));
       setPlayingId(null);
     }
   }, []);
 
-  return { playingId, play, stop };
+  return { playingId, play, stop, error };
 }

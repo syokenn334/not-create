@@ -76,6 +76,18 @@ body {
 .blink { animation: blink 1.1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0.15; } }
 
+.crt-error {
+  margin-top: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.78rem;
+  color: #ff5a5a;
+  border: 1px solid #ff5a5a;
+  background: rgba(255, 90, 90, 0.08);
+  text-shadow: 0 0 6px rgba(255, 90, 90, 0.5);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
 /* fixed punchcard screen */
 .crt-screen {
   position: relative;
