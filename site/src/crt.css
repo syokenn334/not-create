@@ -200,7 +200,7 @@ body {
   will-change: transform;
 }
 /* 再生中のみ: 少し止まってから左へスクロール → 右から戻ってまた止まる */
-.crt-deck-text.scrolling { animation: deckScroll 9s linear infinite; }
+.crt-deck-text.scrolling { animation: deckScroll 18s linear infinite; }
 @keyframes deckScroll {
   0%, 16% { transform: translateX(0); }
   46% { transform: translateX(-380px); }
