@@ -13,7 +13,7 @@ function ensureInit() {
       // 全再生パターンにパンチカードを適用(コードを改変せず多文でも安全)。
       // 正確な形は Task 5 の実機確認で確定する。
       try {
-        await evaluate('all(x => x.punchcard())', false);
+        await evaluate("all(x => x.color('#46ff95').punchcard())", false);
       } catch (err) {
         console.warn('[gallery] punchcard setup failed (要 Task5 確認):', err);
       }
