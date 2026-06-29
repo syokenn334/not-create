@@ -8,7 +8,7 @@ let initPromise = null;
 function ensureInit() {
   if (!initPromise) {
     initPromise = initStrudel({
-      prebake: () => evalScope(import('@strudel/draw')),
+      prebake: () => evalScope(import('@strudel/draw')).catch((e) => console.warn('[gallery] draw load failed', e)),
     }).then(async () => {
       // 全再生パターンにパンチカードを適用(コードを改変せず多文でも安全)。
       // 正確な形は Task 5 の実機確認で確定する。

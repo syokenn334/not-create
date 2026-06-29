@@ -23,7 +23,7 @@ export async function buildManifest(dir) {
       if (it.name.startsWith('_')) continue;
       const code = await readFile(full, 'utf8');
       const rel = path.relative(dir, full).split(path.sep).join('/');
-      const id = rel.replace(/\.(mjs|strudel)$/, '').replace(/[^a-zA-Z0-9]+/g, '__');
+      const id = rel.replace(/[^a-zA-Z0-9]+/g, '__'); // 拡張子込みで一意化(live.mjs と live.strudel の衝突防止)
       const m = code.match(/\/\/\s*@title\s+(.+)/);
       const title = m ? m[1].trim() : path.basename(it.name).replace(/\.(mjs|strudel)$/, '');
       entries.push({ id, title, file: rel, code });
