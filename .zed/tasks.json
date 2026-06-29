@@ -1,0 +1,23 @@
+[
+  {
+    "label": "Strudel: Toggle",
+    "command": "npm run toggle",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "never"
+  },
+  {
+    "label": "Strudel: Stop",
+    "command": "npm run stop",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "never"
+  },
+  {
+    "label": "Strudel: Play",
+    "command": "npm run play",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "never"
+  }
+]

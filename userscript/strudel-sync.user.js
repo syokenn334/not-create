@@ -49,6 +49,22 @@
     }
   }
 
+  // Zed タスク等からの再生/停止コマンド。
+  function control(action) {
+    const mirror = getMirror();
+    if (!mirror) {
+      console.warn('[strudel-sync] StrudelMirror が見つかりません。');
+      return;
+    }
+    try {
+      if (action === 'stop' && typeof mirror.stop === 'function') mirror.stop();
+      else if (action === 'toggle' && typeof mirror.toggle === 'function') mirror.toggle();
+      else if (action === 'play' && typeof mirror.evaluate === 'function') mirror.evaluate();
+    } catch (err) {
+      console.error('[strudel-sync] control error', err);
+    }
+  }
+
   let ws = null;
   let retry = 0;
 
@@ -75,8 +91,11 @@
     ws.onmessage = (ev) => {
       let msg;
       try { msg = JSON.parse(ev.data); } catch (_) { return; }
-      if (msg && msg.type === 'code' && typeof msg.content === 'string') {
+      if (!msg) return;
+      if (msg.type === 'code' && typeof msg.content === 'string') {
         apply(msg.content);
+      } else if (msg.type === 'control' && typeof msg.action === 'string') {
+        control(msg.action);
       }
     };
   }

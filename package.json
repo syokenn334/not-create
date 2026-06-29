@@ -6,7 +6,10 @@
   "description": "Edit .strudel files in any editor; hot-swap them into strudel.cc over WebSocket.",
   "scripts": {
     "start": "node watch-server.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "stop": "node strudel-ctl.mjs stop",
+    "toggle": "node strudel-ctl.mjs toggle",
+    "play": "node strudel-ctl.mjs play"
   },
   "dependencies": {
     "chokidar": "^4.0.0",
