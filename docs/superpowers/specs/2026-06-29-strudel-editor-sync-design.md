@@ -65,7 +65,7 @@ flowchart LR
   - `evaluate()` が構文エラーで throw した場合は catch してログ表示。**直前の有効パターンは鳴り続ける**(Strudel の挙動)。
   - 接続状態を示す小さなオンページ表示(connected / disconnected)を出す。
 - 依存先: strudel.cc が公開する `StrudelMirror` インスタンス。
-  - 注: 正確なグローバル参照名(例 `window.strudelMirror` など)は**実装時にコンソールで確定**する。メソッドは `setCode(code)` と `evaluate()` を使用(必要に応じて `toggle()`/`stop()`)。
+  - グローバル参照は **`window.strudelMirror`**(gruvw/strudel.nvim の `js/launch.js` で同じ参照を使用していることを確認)。メソッドは `setCode(code)` と `evaluate()` を使用(必要に応じて `toggle()`/`stop()`)。
 
 ### 4.3 パターン置き場(`patterns/`)
 
@@ -88,7 +88,7 @@ flowchart LR
 
 - **mixed-content(https → ws://localhost)**: `https://strudel.cc` から `ws://localhost` への接続は、ブラウザがループバック(localhost / 127.0.0.1)を "potentially trustworthy" として扱うため、Chromium 系では通る見込み。Firefox もループバック例外で概ね可。**最初に実機で要確認**。通らない場合のフォールバック: ローカル証明書で `wss://`、または将来案の「ローカル `@strudel/web` ページ(http://localhost 配信なので mixed-content が発生しない)」へ切替。
 - **自動再生ポリシー**: 初回はユーザー操作が必要。strudel.cc ページ上で一度再生(クリック/Play)して AudioContext を起動しておく。以降は `evaluate()` でギャップなく差し替わる。
-- **`StrudelMirror` グローバル参照**: コンソールから到達可能であることは確認済みだが、正確な参照名は実装時に確定する(strudel.cc 更新で変わり得る点はリスクとして認識)。
+- **`StrudelMirror` グローバル参照**: `window.strudelMirror` で確定(strudel.nvim 実装で裏付け)。strudel.cc の更新で参照名が変わり得る点はリスクとして認識し、userscript の `getMirror()` で吸収する。
 - **一方向同期**: コードはエディタ → strudel.cc の一方向のみ。strudel.nvim のような双方向カーソル同期は行わない(意図的な簡素化)。
 - **音飛び(当初の動機)**: 本構成はオンラインの strudel.cc を使うため、サンプル遅延読み込み由来の音飛びは残り得る。完全対策は将来案(ローカル `@strudel/web` + `@strudel/sampler`)で対応。
 

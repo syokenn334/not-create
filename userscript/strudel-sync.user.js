@@ -25,14 +25,12 @@
   if (document.body) mountBadge();
   else document.addEventListener('DOMContentLoaded', mountBadge);
 
-  // strudel.cc が公開する StrudelMirror インスタンスを取得する。
-  // 実際のグローバル参照名は実機(Task 6)でコンソール確認し、必要なら下記候補を調整する。
+  // strudel.cc は StrudelMirror インスタンスを window.strudelMirror で公開している
+  // (gruvw/strudel.nvim の js/launch.js でも window.strudelMirror.evaluate() を使用)。
+  // setCode(code) で内容更新 → evaluate() で次サイクルからホットスワップ。
+  // 万一 strudel.cc 側で参照名が変わった場合はここを調整する。
   function getMirror() {
-    return (
-      window.strudelMirror ||
-      (window.editor && (window.editor.repl || window.editor)) ||
-      null
-    );
+    return window.strudelMirror || null;
   }
 
   function apply(code) {
