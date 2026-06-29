@@ -9,7 +9,8 @@
     "test": "node --test",
     "stop": "node strudel-ctl.mjs stop",
     "toggle": "node strudel-ctl.mjs toggle",
-    "play": "node strudel-ctl.mjs play"
+    "play": "node strudel-ctl.mjs play",
+    "bookmarklet": "node build-bookmarklet.mjs"
   },
   "dependencies": {
     "chokidar": "^4.0.0",
