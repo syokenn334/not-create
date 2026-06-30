@@ -53,5 +53,10 @@ npm run check-lessons   # lessons/ 配下を一括チェック
 - [ ] M9 テンションとボイシング(`09-voicing-tension/`)
 - [ ] 統合C 1 コーラス完成(`integration-C-chorus/`)
 
-### Phase 4 以降(今後追加)
-構成・仕上げ編。
+### Phase 4 構成・仕上げ編
+- [ ] M10 アレンジとテクスチャ(`10-arrange-texture/`)
+- [ ] M11 曲の構成(`11-song-structure/`)
+- [ ] M12 ミックスと作品化(`12-mix-finish/`)
+- [ ] 統合D 1 曲完成(`integration-D-track/`)
+
+これで Phase 1〜4 のカリキュラムは完成です。各レッスンを順に進め、統合D で構成のある 1 曲を作り上げてください。
