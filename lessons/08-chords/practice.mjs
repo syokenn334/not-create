@@ -4,4 +4,4 @@ setcpm(120 / 4)
 //   メジャー三和音 = ルート + 4半音 + 7半音、マイナー = ルート + 3半音 + 7半音。
 // TODO 2: 進行の順番を入れ替えて、終わった感じ/続く感じの違いを聴く。
 note("<[c3,eb3,g3] [ab2,c3,eb3] [bb2,d3,f3] [c3,eb3,g3]>")
-  .s("sawtooth").lpf(1200).attack(0.02).release(0.4).gain(0.4).punchcard()
+  .s("sawtooth").lpf(1200).attack(0.02).release(0.4).gain(0.4)._punchcard()

@@ -7,4 +7,4 @@ arrange(
   // TODO: [16, stack(...フル: ドラム+ベース+コード+パッド...)], ← Phase 3
   // TODO: [8, stack(...ブレイク: キックを抜く...)],
   // TODO: 各レイヤーの gain / pan / room を整える(ミックス)   ← M12
-).punchcard()
+)._punchcard()

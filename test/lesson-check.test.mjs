@@ -21,7 +21,7 @@ test('setcpm を含む複数文も評価できる', async () => {
   assert.ok(haps.length >= 12, `12個以上を期待、実際は ${haps.length}`);
 });
 
-test('punchcard などの描画メソッドも評価できる(@strudel/draw)', async () => {
-  const haps = await evaluateLessonString('s("bd*4").punchcard()');
+test('_punchcard などの描画メソッドも評価できる(@strudel/draw)', async () => {
+  const haps = await evaluateLessonString('s("bd*4")._punchcard()');
   assert.ok(haps.length >= 4, `4個以上のイベントを期待、実際は ${haps.length}`);
 });

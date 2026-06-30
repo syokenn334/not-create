@@ -5,4 +5,4 @@ stack(
   s("hh*8").gain(0.5).pan(0.7),                         // ハットは控えめ・右寄り
   s("~ cp ~ cp").gain(0.7).room(0.3),                   // クラップに残響
   note("c2*8").s("sawtooth").lpf(600).gain(0.6).pan(0.4), // ベースは中央やや左
-).punchcard()
+)._punchcard()

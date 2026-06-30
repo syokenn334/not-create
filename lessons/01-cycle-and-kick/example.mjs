@@ -2,4 +2,4 @@
 // setcpm で BPM を指定(1 サイクル = 1 小節 = 4 拍なので BPM/4)。
 // "bd*4" は 1 サイクルにキックを 4 回 = 4 つ打ち。
 setcpm(130 / 4)
-s("bd*4").punchcard()
+s("bd*4")._punchcard()

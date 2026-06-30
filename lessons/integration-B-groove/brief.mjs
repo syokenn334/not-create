@@ -7,4 +7,4 @@ stack(
   // TODO: スケールに沿ったベースラインを足す(n(...).scale("c2:minor")) ← M6
   // TODO: ベースの音色を sawtooth + ADSR で整える                      ← M4
   // TODO: どこかのレイヤーに lpf(sine.range(...).slow(...)) で展開を付ける ← M5
-).punchcard()
+)._punchcard()

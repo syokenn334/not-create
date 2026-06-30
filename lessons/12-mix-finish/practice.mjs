@@ -7,4 +7,4 @@ stack(
   s("hh*8").gain(0.5).pan(0.7),
   s("~ cp ~ cp").gain(0.7).room(0.3),
   note("c2*8").s("sawtooth").lpf(600).gain(0.6).pan(0.4),
-).punchcard()
+)._punchcard()
