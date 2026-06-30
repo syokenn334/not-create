@@ -41,5 +41,11 @@ npm run check-lessons   # lessons/ 配下を一括チェック
 - [ ] M3 グルーヴ(`03-groove/`)
 - [ ] 統合A ビート完成(`integration-A-beat/`)
 
-### Phase 2 以降(今後追加)
-音色・ベース編 / 和声編 / 構成・仕上げ編。
+### Phase 2 音色・ベース編
+- [ ] M4 サウンド基礎(`04-sound-basics/`)
+- [ ] M5 フィルターと空間(`05-filter-space/`)
+- [ ] M6 ベースライン(`06-bassline/`)
+- [ ] 統合B グルーヴ完成(`integration-B-groove/`)
+
+### Phase 3 以降(今後追加)
+和声編 / 構成・仕上げ編。

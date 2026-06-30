@@ -26,3 +26,8 @@
 | ユークリッドリズム | `.euclid(3, 8)` | k 個を n 等分に均等配置 |
 | 残響 | `.room(0.3)` | 空間 |
 | 構造の指定 | `.struct("x ~ x x")` | リズムの骨組み |
+| 波形シンセ | `note("c3").s("sawtooth")` | sine/sawtooth/square/triangle |
+| 音の形(ADSR) | `.attack(.01).decay(.2).sustain(.3).release(.1)` | 立ち上がり/減衰/保持/余韻 |
+| ローパスフィルター | `.lpf(800)` / `.lpf(sine.range(300,1500).slow(4))` | 倍音を削る/LFOで動かす |
+| 残響・ディレイ | `.room(0.3)` / `.delay(0.25)` | 空間/やまびこ |
+| スケール | `n("0 3 5").scale("c2:minor")` | 度数でスケール上の音を選ぶ |
