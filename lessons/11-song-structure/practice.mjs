@@ -7,4 +7,4 @@ arrange(
   // TODO 2: ドロップの後に「ブレイク」(キックを抜く)セクションを足してみる。
   //   例: [4, stack(s("hh*8"), s("~ cp ~ cp"))],
   [8, stack(s("bd*4"), s("hh*8"), s("~ cp ~ cp"))],
-)
+).punchcard()

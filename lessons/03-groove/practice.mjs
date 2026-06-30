@@ -7,4 +7,4 @@ stack(
   s("~ cp ~ cp").room(0.25),
   // TODO 2: euclid の数字を (5, 8) や (3, 8) に変えて、パーカッションの密度を変える。
   s("rim").euclid(3, 8).gain(0.5),
-)
+).punchcard()
