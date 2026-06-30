@@ -47,5 +47,11 @@ npm run check-lessons   # lessons/ 配下を一括チェック
 - [ ] M6 ベースライン(`06-bassline/`)
 - [ ] 統合B グルーヴ完成(`integration-B-groove/`)
 
-### Phase 3 以降(今後追加)
-和声編 / 構成・仕上げ編。
+### Phase 3 和声編
+- [ ] M7 スケールと音程(`07-scales-intervals/`)
+- [ ] M8 和音の基礎(`08-chords/`)
+- [ ] M9 テンションとボイシング(`09-voicing-tension/`)
+- [ ] 統合C 1 コーラス完成(`integration-C-chorus/`)
+
+### Phase 4 以降(今後追加)
+構成・仕上げ編。
