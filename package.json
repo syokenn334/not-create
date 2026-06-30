@@ -11,7 +11,9 @@
     "toggle": "node strudel-ctl.mjs toggle",
     "play": "node strudel-ctl.mjs play",
     "bookmarklet": "node build-bookmarklet.mjs",
-    "build-types": "node build-types.mjs"
+    "build-types": "node build-types.mjs",
+    "check-lesson": "node scripts/check-lesson.mjs",
+    "check-lessons": "node scripts/check-lesson.mjs --all"
   },
   "dependencies": {
     "chokidar": "^4.0.0",
