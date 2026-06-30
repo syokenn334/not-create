@@ -4,7 +4,7 @@ import { mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { WebSocket } from 'ws';
-import { createSyncServer } from '../lib/server.mjs';
+import { createSyncServer, parseDirs } from '../lib/server.mjs';
 
 const PORT = 34567;
 
@@ -82,6 +82,46 @@ test('対象外拡張子(.txt)の変更は配信しない', async () => {
     ws.close();
     await server.close();
     await rm(dir, { recursive: true, force: true });
+  }
+});
+
+test('PATTERNS_DIR 未設定なら patterns と lessons の両方を既定にする', () => {
+  assert.deepEqual(parseDirs(undefined), ['patterns', 'lessons']);
+  assert.deepEqual(parseDirs(''), ['patterns', 'lessons']);
+});
+
+test('カンマ区切りの PATTERNS_DIR を配列に分解する(空白はトリム)', () => {
+  assert.deepEqual(parseDirs('lessons'), ['lessons']);
+  assert.deepEqual(parseDirs(' patterns , lessons '), ['patterns', 'lessons']);
+});
+
+test('複数ディレクトリのいずれの変更も配信する', async () => {
+  const dirA = await mkdtemp(path.join(tmpdir(), 'strudel-sync-a-'));
+  const dirB = await mkdtemp(path.join(tmpdir(), 'strudel-sync-b-'));
+  const port = PORT + 4;
+  const server = createSyncServer({ port, dir: [dirA, dirB] });
+  await server.ready;
+
+  const ws = new WebSocket(`ws://localhost:${port}`);
+  const received = new Promise((resolve, reject) => {
+    ws.on('message', (d) => resolve(JSON.parse(d.toString())));
+    ws.on('error', reject);
+  });
+  await new Promise((res, rej) => { ws.on('open', res); ws.on('error', rej); });
+
+  // 2 つ目のディレクトリ(lessons 相当)に置いたファイルも配信されること
+  await writeFile(path.join(dirB, 'example.mjs'), 's("bd*2")');
+
+  try {
+    const msg = await received;
+    assert.equal(msg.type, 'code');
+    assert.equal(msg.path, 'example.mjs');
+    assert.equal(msg.content, 's("bd*2")');
+  } finally {
+    ws.close();
+    await server.close();
+    await rm(dirA, { recursive: true, force: true });
+    await rm(dirB, { recursive: true, force: true });
   }
 });
 
