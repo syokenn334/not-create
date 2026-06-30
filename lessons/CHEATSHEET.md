@@ -29,7 +29,7 @@
 | 波形シンセ | `note("c3").s("sawtooth")` | sine/sawtooth/square/triangle |
 | 音の形(ADSR) | `.attack(.01).decay(.2).sustain(.3).release(.1)` | 立ち上がり/減衰/保持/余韻 |
 | ローパスフィルター | `.lpf(800)` / `.lpf(sine.range(300,1500).slow(4))` | 倍音を削る/LFOで動かす |
-| 残響・ディレイ | `.room(0.3)` / `.delay(0.25)` | 空間/やまびこ |
+| ディレイ | `.delay(0.25)` | やまびこ(M5) |
 | スケール | `n("0 3 5").scale("c2:minor")` | 度数でスケール上の音を選ぶ |
 | モード | `n("0 2 4").scale("c4:dorian")` | major/minor/dorian/phrygian… |
 | 三和音(手書き) | `note("[c3,eb3,g3]")` | カンマ=同時。メジャー/マイナー |
